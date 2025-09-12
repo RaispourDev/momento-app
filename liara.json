@@ -1,0 +1,8 @@
+{
+  "app": "momento-app",
+  "port": 3000,
+  "build": {
+    "location": "iran"
+  },
+  "disks": []
+}
