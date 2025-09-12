@@ -1,103 +1,129 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
+export default function Dashboard() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
+      const email = localStorage.getItem('userEmail') || ''
+      const name = localStorage.getItem('userName') || ''
+      
+      setIsLoggedIn(loggedIn)
+      setUserEmail(email)
+      setUserName(name)
+      setIsLoading(false)
+      
+      if (!loggedIn) {
+        router.push('/auth/login')
+      }
+    }
+
+    checkAuth()
+    
+    window.addEventListener('storage', checkAuth)
+    return () => window.removeEventListener('storage', checkAuth)
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('userName')
+    setIsLoggedIn(false)
+    router.push('/auth/login')
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin text-2xl mb-2">⏳</div>
+          <p>در حال بررسی وضعیت ورود...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isLoggedIn) {
+    return null
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gray-100">
+      {/* هدر */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">داشبورد کاربری</h1>
+              {userName && (
+                <p className="text-sm text-gray-600">خوش آمدید، {userName}</p>
+              )}
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center">
+                <span className="ml-2">📤</span>
+                آپلود عکس
+              </button>
+              
+              <button 
+                onClick={handleLogout}
+                className="text-gray-600 hover:text-red-600 flex items-center"
+              >
+                <span className="ml-1">🚪</span>
+                خروج
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* محتوای اصلی */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-3xl">🎉</span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            {userName ? `سلام ${userName}!` : 'خوش آمدید!'}
+          </h2>
+          <p className="text-gray-600 mb-6">حساب کاربری شما با موفقیت ایجاد شد</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div className="bg-blue-50 p-6 rounded-lg">
+              <span className="text-2xl mb-3 block">📷</span>
+              <h3 className="font-semibold mb-2">شروع کنید</h3>
+              <p className="text-sm text-gray-600">اولین عکس خود را آپلود کنید</p>
+            </div>
+            
+            <div className="bg-green-50 p-6 rounded-lg">
+              <span className="text-2xl mb-3 block">👀</span>
+              <h3 className="font-semibold mb-2">گالری شما</h3>
+              <p className="text-sm text-gray-600">عکس‌های خود را مدیریت کنید</p>
+            </div>
+            
+            <div className="bg-purple-50 p-6 rounded-lg">
+              <span className="text-2xl mb-3 block">⚙️</span>
+              <h3 className="font-semibold mb-2">تنظیمات</h3>
+              <p className="text-sm text-gray-600">حساب خود را شخصی‌سازی کنید</p>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
+              شروع کار با گالری
+            </button>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
