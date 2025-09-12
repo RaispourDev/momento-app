@@ -1,8 +1,20 @@
 {
-  "app": "momento-app",
+  "platform": "node",
+  "name": "momento-app",
+  "region": "iran",
   "port": 3000,
   "build": {
-    "location": "iran"
+    "install": "npm install",
+    "start": "npm run build && npm run start"
   },
-  "disks": []
+  "env": 
+{
+"MONGODB_URI": "mongodb://root:iemnrajKnWxghdIt9pRORYAR@momento-db:27017/my-app?authSource=admin",
+"NEXTAUTH_URL": "https://momento-app.liara.run",
+"NEXTAUTH_SECRET": "123456",
+"LIARA_ENDPOINT": "storage.c2.liara.space",
+"LIARA_BUCKET_NAME": "momento-bk",
+"LIARA_ACCESS_KEY": "2o0mhg3lnaniou1f",
+"LIARA_SECRET_KEY": "18de69c8-e113-4b26-9473-4f0e555072b2"
+  }
 }
