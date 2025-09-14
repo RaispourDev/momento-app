@@ -1,10 +1,4 @@
-import type { Metadata } from 'next'
 import './globals.css'
-
-export const metadata: Metadata = {
-  title: 'گالری عکس',
-  description: 'برنامه گالری عکس',
-}
 
 export default function RootLayout({
   children,
@@ -12,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="en" dir="ltr">
       <body>{children}</body>
     </html>
   )

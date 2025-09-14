@@ -1,10 +1,19 @@
-export default function Home() {
+"use client"
+import { useRouter } from 'next/navigation'
+import React from 'react'
+
+function Dashboard() {
+
+  const router = useRouter()
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">سلام! 👋</h1>
-        <p className="text-lg text-gray-600">برنامه آماده اجرا در Liara است</p>
-      </div>
+    <div className='min-h-screen bg-grey-100 flex items-center justify-center'>
+      <h1 className='font-bold text-6xl gap-5'>MOMENTO</h1>
+      <button onClick={()=> router.push("/dashboard")}
+      className='bg-green-500 py-9 rounded-t-full'  
+      >Dashboard</button>
     </div>
   )
 }
+
+export default Dashboard
