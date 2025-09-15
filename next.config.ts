@@ -1,9 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'standalone',
-  experimental: {
-    serverComponentsExternalPackages: ['@liara/liara-db'],
-  },
-}
+import type { NextConfig,  } from "next";
 
-module.exports = nextConfig
+const NextConfig: NextConfig ={
+  reactStrictMode: true,
+
+  serverExternalPackages: [
+    "@aws-sdk/client-s3",
+    "@aws-sdk,s3-request-presigner"
+  ],
+};
+
+export default NextConfig

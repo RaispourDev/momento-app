@@ -27,10 +27,6 @@ function Dashboard() {
         }
     }
 
-    const downloadImage = (image: any)=>{
-        console.log("file is on download:", image.title)
-        alert(`downloading ${image.title}`)
-    }
   return (
     <Fragment>
         <header  className="max-w-screen max-h-2/12 text-6xl p-4 flex items-center justify-center">
@@ -41,7 +37,7 @@ function Dashboard() {
             <div key={image.id} className="bg-white">
                 <h3 className="bg-red-500 m-4">{image.title}</h3>
                 <button className="bg-green-600 text-yellow-600" onClick={()=>handleDelete(image.id)}>delete</button>
-                <button className="bg-red-600 text-yellow-600" onClick={()=>downloadImage(image.id)}>download</button>
+                <button className="bg-red-600 text-yellow-600">download</button>
             </div>
         ))}
     </div>
