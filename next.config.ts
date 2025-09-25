@@ -1,26 +1,16 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Enable static exports if using static site generation
+  output: 'export', // Optional: for fully static sites
   
-  // برای استفاده از AWS SDK در سرور
-  serverExternalPackages: [
-    "@aws-sdk/client-s3",
-    "@aws-sdk/s3-request-presigner"
-  ],
-
-  // برای حل مشکل upload در Vercel/Liara
-  experimental: {
-    serverComponentsExternalPackages: ["@aws-sdk/client-s3"]
+  // Image optimization
+  images: {
+    unoptimized: true, // Required if using `output: 'export'`
+    domains: ['example.com'], // Add your image domains
   },
-
-  // اگر با حجم فایل‌ها مشکل دارید
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb'
-    }
-  },
+  
+  // Trailing slash for better SEO
+  trailingSlash: true,
 }
-  
 
-export default nextConfig;
+module.exports = nextConfig

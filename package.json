@@ -15,6 +15,7 @@
     "@aws-sdk/s3-request-presigner": "^3.888.0",
     "@next-auth/mongodb-adapter": "^1.1.3",
     "@prisma/client": "^6.16.2",
+    "@supabase/supabase-js": "^2.57.4",
     "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
@@ -27,7 +28,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.63.0",
-    "vercel": "^32.0.1"
+    "supabase": "^2.45.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -40,6 +41,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^48.1.4"
   }
 }
