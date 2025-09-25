@@ -1,18 +1,16 @@
 "use client"
 
 import { useAuth } from '../../../contexts/AuthContext'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 export default function Dashboard() {
   const { user, loading, signOut } = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/auth/signin')
+      window.location.href = '/signin'
     }
-  }, [user, loading, router])
+  }, [user, loading])
 
   if (loading) {
     return (
@@ -28,7 +26,7 @@ export default function Dashboard() {
 
   const handleSignOut = async () => {
     await signOut()
-    router.push('/auth/signin')
+    window.location.href = '/signin'
   }
 
   return (

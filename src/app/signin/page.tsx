@@ -19,10 +19,13 @@ export default function SignIn() {
     setError('')
 
     try {
-      const { error } = await signIn(email, password)
+      const { data, error } = await signIn(email, password)
       
       if (error) {
         throw error
+      }else {
+        console.log('Signup successful:', data)
+        window.location.href = '/dashboard'
       }
       
       redirect('/dashboard')
@@ -90,7 +93,7 @@ return (
           </div>
 
           <div className="text-center">
-            <Link href="/auth/signup" className="text-blue-600 hover:text-blue-500">
+            <Link href="/signup" className="text-blue-600 hover:text-blue-500">
               Dont have an account? Sign up
             </Link>
           </div>
