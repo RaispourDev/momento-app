@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { redirect } from 'next/navigation'
 import Link from "next/link";
 
 export default function SignUp(){
@@ -28,7 +27,7 @@ export default function SignUp(){
       }
 
 
-        redirect('/dashboard')
+      window.location.href = ('/dashboard')
     } catch (err: unknown){
         if(err instanceof Error){
             setError(err.message)
